@@ -106,22 +106,22 @@ module.exports = {
         const precisionKills = stats.precisionKills ? stats.precisionKills.basic.value : 0;
         const score = stats.score ? stats.score.basic.value : 0;
 
-        // Format as a table in a code block
-        const table =
-`| Stat           | Value |
-|----------------|-------|
-| Kills          | ${kills} |
-| Deaths         | ${deaths} |
-| Assists        | ${assists} |
-| K/D            | ${kd} |
-| Orbs Created   | ${orbs} |
-| PrecisionKills | ${precisionKills} |
-| Score          | ${score} |`;
+        // Format as a markdown list
+        const statLines = [
+            `**Kills:** ${kills}`,
+            `**Deaths:** ${deaths}`,
+            `**Assists:** ${assists}`,
+            `**K/D:** ${kd}`,
+            `**Orbs Created:** ${orbs}`,
+            `**Precision Kills:** ${precisionKills}`,
+            `**Score:** ${score}`
+        ];
+        const statText = statLines.join('\n');
 
         const embed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('Latest Activity Stats')
-            .setDescription(`**Activity Instance:** ${latestActivity.activityDetails.instanceId}\n\n\`\`\`markdown\n${table}\n\`\`\``)
+            .setDescription(`**Activity Instance:** ${latestActivity.activityDetails.instanceId}\n\n${statText}`)
             .setTimestamp(new Date(latestActivity.period));
 
         await interaction.editReply({ embeds: [embed] });
